@@ -56,7 +56,11 @@ function App() {
     setTodos(newTodos);
   }
 
-  //https://upmostly.com/tutorials/build-a-todo-app-in-react-using-hooks
+  function toggleTodoCompleteAtIndex(index) {
+    const temporaryTodos = [...todos];
+    temporaryTodos[index].isCompleted = !temporaryTodos[index].isCompleted;
+    setTodos(temporaryTodos);
+  }
 
   return (
     <div className="app">
@@ -66,8 +70,13 @@ function App() {
       <form className="todo-list">
         <ul>
           {todos.map((todo, i) => (
-            <div className="todo">
-              <div className="checkbox" />
+            <div className={`todo ${todo.isCompleted && "todo-is-completed"}`}>
+              <div
+                className={"checkbox"}
+                onClick={() => toggleTodoCompleteAtIndex(i)}
+              >
+                {todo.isCompleted && <span>&#x2714;</span>}
+              </div>
               <input
                 type="text"
                 value={todo.content}
